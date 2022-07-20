@@ -1,13 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class Users(models.Model):
-    name = models.CharField(max_length=60)
-    firstname = models.CharField(max_length=60)
-    mail = models.EmailField(max_length=254)
-    pwd = models.CharField(max_length=254)
+class CustomUser(AbstractUser):
+    pass
+    # add additional fields in here
+
+    def __str__(self):
+        return self.username
 
 
 class Games(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     data = models.CharField(max_length=2000)
+
