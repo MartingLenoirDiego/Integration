@@ -2,11 +2,14 @@
 
 {% block title %}Log In{% endblock %}
 
-{% block content %}
-<h2>Log In</h2>
-<form method="post">
+{% block login %}
+    <div style="color:white; width: 100%; margin-left: 15px; font-size: 30px" >
+<h2 >Log In</h2>
+
+<form method="post" >
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Log In</button>
+  <button type="submit" style="color: white; font-size: 30px">Log In</button>
 </form>
+    </div>
 {% endblock %}

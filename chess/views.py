@@ -14,7 +14,8 @@ def index(request):
 
 
 def games(request):
-    all_games = Games.objects.filter(user = 2 )
+    print(request.user)
+    all_games = Games.objects.filter(user = request.user )
     context = {
         'games': all_games,
     }
@@ -33,10 +34,4 @@ class SignUpView(CreateView):
     template_name = "registration/signup.html"
 
 
-def login_view(request):
-    user = authenticate(request, username="Dis", password="12DIE34go*/")
-    if user is not None:
-        login(request, user)
-        return render(request, 'game.html')
-    else:
-        print('2')
+

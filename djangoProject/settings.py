@@ -127,5 +127,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "chess.CustomUser"  # new
-LOGIN_REDIRECT_URL = "/chess/"
-LOGOUT_REDIRECT_URL = "/chess/"
+LOGIN_REDIRECT_URL = "/chess"
+LOGOUT_REDIRECT_URL = "/"
