@@ -1,9 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-</body>
-</html>
+{% extends "base.html" %}
+{% block body %}
+    {% load static %}
+    <section style="width: 100%">
+        <video id="video" width="640" height="480" style="position: absolute; " autoplay></video>
+        <div id="myBoard" style="width: 600px; position: absolute; margin-left: 40% "></div>
+    </section>
+        <button id="start-camera" style=" margin-top: 500px; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px;">Start Camera</button>
+        <canvas id="canvas" width="320" height="240"  hidden></canvas>
+    <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input id="image" type="image" name="image"  />
+          <br />
+          <button id="add-movement" style="margin-top: 500px; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px;display: none">Add movement</button>
+
+    </form>
+
+
+
+
+
+
+    <script>
+        let config = {
+            dropOffBoard: 'snapback', // this is the default
+            position: 'start',
+            pieceTheme:'{% static 'img/chesspieces/wikipedia/' %}'+'{piece}.png'
+            }
+        Chessboard('myBoard', config)
+
+        let camera_button = document.querySelector("#start-camera");
+        let video = document.querySelector("#video");
+        let click_button = document.querySelector("#add-movement");
+        let canvas = document.querySelector("#canvas");
+        camera_button.addEventListener('click', async function() {
+            let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            video.srcObject = stream;
+            camera_button.style.display = "none"
+            click_button.style.display = ""
+        });
+
+        click_button.addEventListener('click', function() {
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        let image_data_url = canvas.toDataURL('image/jpeg');
+
+            // data url of the image
+            console.log(image_data_url);
+            document.getElementById('image').value = image_data_url;
+        });
+
+
+    </script>
+{% endblock %}
+
+

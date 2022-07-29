@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block body %}
     {% load static %}
-    <h1>{{ games.id }}</h1>
+
+    <button onclick="share()" style="width: 10%; margin-left: 5%; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px; position: absolute">Share</button>
+        <p style="position: absolute; color: white; margin-top: 70px; margin-left: 5%" id="share"></p>
         <div id="myBoard" style="width: 800px; margin: auto;"></div>
             <button class="arrow left" onclick="change_board(-1)">
               <svg width="60px" height="80px" viewBox="0 0 50 80" xml:space="preserve">
@@ -35,7 +37,16 @@
             position: fen[i],
             pieceTheme:'{% static 'img/chesspieces/wikipedia/' %}'+'{piece}.png'
             }
-            let board = Chessboard('myBoard', config)
+            Chessboard('myBoard', config)
+        }
+        // When the user clicks on div, open the popup
+        function myFunction() {
+          var popup = document.getElementById("myPopup");
+          popup.classList.toggle("show");
+        }
+
+        function share(){
+            document.getElementById('share').innerHTML = '127.0.0.1:8000/chess/{{ game.id }}/'
         }
 
     </script>

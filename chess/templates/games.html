@@ -1,13 +1,26 @@
 {% extends "base.html" %}
 {% block body %}
+    <a href="{% url 'play' %}"><button style="margin-left:40%; margin-top: 20px; width: 20%; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px;"  >New game</button></a>
     {% if games %}
         {% for game in games %}
-            <a href="{% url 'game' game.id %}"><button style="margin-left:40%; margin-top: 20px; width: 20%; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px;" >{{ game.id }}</button></a>
+            <a href="{% url 'game' game.id %}" ><button style="margin-left:40%; margin-top: 20px; width: 20%; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px;" class="games" >{{ game.date }}</button></a>
             <br>
         {% endfor %}
     {% else %}
-        <p>No games are available.</p>
-    {% endif %} {% endblock %}
+        <p style="color: white; font-size: 30px">No games are available.</p>
+    {% endif %}
+    <script>
+        let games = document.getElementsByClassName('games')
+        for(let i=0; i< games.length; i++){
+            let temp = games[i].innerHTML
+            games[i].innerHTML = i + " | " + temp;
+
+        }
+        console.log('1')
+
+</script>
+{% endblock %}
+
 
 
 

@@ -57,13 +57,18 @@ li a:hover:not(.active) {
 </head>
 <body>
 <ol>
-  <li><a class="active" href="#home">Home</a></li>
+    <li><a href="{% url 'home' %}">Home</a></li>
     {% block login %}
-        <div style="color:white; width: 100%; margin-left: 15px; font-size: 30px" >
+
         {% if user.is_authenticated %}
-          Hi {{ user.username }}!
+              <li><a  href="{% url 'games' %}">Games</a></li>
+        <div style="color:white; width: 100%; margin-left: 15px; font-size: 30px" >
+          <p >Hi {{ user.username }}!</p>
+
           <p><a href="{% url 'logout' %}">Log Out</a></p>
+        </div>
         {% else %}
+            <div style="color:white; width: 100%; margin-left: 15px; font-size: 30px" >
           <p>You are not logged in</p>
           <a style="color: white" href="{% url 'login' %}">Log In</a>
             <br>

@@ -6,11 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
-
-
-def index(request):
-    context = {}
-    return render(request, 'index.html', context)
+import os
 
 
 def games(request):
@@ -30,8 +26,38 @@ def game(request, game_id):
 
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy("")
+    success_url = reverse_lazy("success")
     template_name = "registration/signup.html"
 
 
+def success(request):
+    context = {}
+    return render(request, 'success.html', context)
+
+
+def play(request):
+    context = {}
+    return render(request, 'play.html', context)
+
+
+def upload_page(request):
+    context = {}
+    return render(request, 'upload.html', context)
+
+
+def upload(request):
+    if request.method == 'POST':
+        handle_uploaded_file(request.FILES['file'], str(request.FILES['file']))
+        return HttpResponse("Successful")
+
+    return HttpResponse("Failed")
+
+
+def handle_uploaded_file(file, filename):
+    if not os.path.exists('upload/'):
+        os.mkdir('upload/')
+
+    with open('upload/' + filename, 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
 
