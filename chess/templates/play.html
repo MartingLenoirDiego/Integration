@@ -7,16 +7,9 @@
     </section>
         <button id="start-camera" style=" margin-top: 500px; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px;">Start Camera</button>
         <canvas id="canvas" width="320" height="240"  hidden></canvas>
-    <form action="" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <input id="image" type="image" name="image"  />
           <br />
-          <button id="add-movement" style="margin-top: 500px; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px;display: none">Add movement</button>
-
-    </form>
-
-
-
+        <input type="text" hidden id="image">
+        <button type="submit" id="add-movement"  style="margin-top: 500px; height: 50px; border:#04AA6D solid; background-color: #04AA6D; color: white; font-size: 35px;display: none" >Add movement</button>
 
 
 
@@ -42,12 +35,23 @@
         click_button.addEventListener('click', function() {
         canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
         let image_data_url = canvas.toDataURL('image/jpeg');
+            document.getElementById('image').value = image_data_url
 
-            // data url of the image
-            console.log(image_data_url);
-            document.getElementById('image').value = image_data_url;
+                    $.ajax({
+                type: 'POST',
+                url: "{% url 'test' %}",
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}', image: image_data_url },
+                success: function (response) {
+                    // on successfull creating object
+
+                    // your logic goes here
+                },
+                error: function (response) {
+                    // alert the error if any error occured
+                    alert(response["responseJSON"]["error"]);
+                }
+            });
         });
-
 
     </script>
 {% endblock %}

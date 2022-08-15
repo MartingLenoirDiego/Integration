@@ -151,8 +151,6 @@ def main(args):
   if args.filepath:
     # Load image from file
     img = helper_image_loading.loadImageFromPath(args.filepath)
-    print("CCCCCCCCCCCCCCCCCCCCCC")
-    print(img)
     args.url = None # Using filepath.
   else:
     img, args.url = helper_image_loading.loadImageFromURL(args.url)

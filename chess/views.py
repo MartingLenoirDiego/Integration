@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
 import os
+from django.views.decorators.csrf import csrf_protect
 
 
 def games(request):
@@ -19,7 +20,6 @@ def games(request):
 
 
 def game(request, game_id):
-    print(game_id)
     choose_game = get_object_or_404(Games, pk=game_id)
     return render(request, 'game.html', {'game': choose_game})
 
@@ -40,24 +40,6 @@ def play(request):
     return render(request, 'play.html', context)
 
 
-def upload_page(request):
-    context = {}
-    return render(request, 'upload.html', context)
-
-
-def upload(request):
-    if request.method == 'POST':
-        handle_uploaded_file(request.FILES['file'], str(request.FILES['file']))
-        return HttpResponse("Successful")
-
-    return HttpResponse("Failed")
-
-
-def handle_uploaded_file(file, filename):
-    if not os.path.exists('upload/'):
-        os.mkdir('upload/')
-
-    with open('upload/' + filename, 'wb+') as destination:
-        for chunk in file.chunks():
-            destination.write(chunk)
-
+def test(request):
+    print(request.POST['image'])
+    return HttpResponse('c')
