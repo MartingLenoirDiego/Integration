@@ -8,6 +8,9 @@ from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
 import os
 from django.views.decorators.csrf import csrf_protect
+import base64
+import io
+from PIL import Image
 
 
 def games(request):
@@ -41,5 +44,12 @@ def play(request):
 
 
 def test(request):
-    print(request.POST['image'])
+    data = request.POST['image']
+    data = data.split("base64")
+    print(data[1])
+    data = bytes(data[1],'UTF-8')
+    with open("chess/imageToChess.png", "wb") as fh:
+       fh.write(base64.decodebytes(data))
+    os.system('python chess/tensorflow_chessbot.py --filepath chess/imageToChess.png ')
+
     return HttpResponse('c')
