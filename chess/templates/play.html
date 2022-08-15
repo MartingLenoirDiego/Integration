@@ -42,9 +42,12 @@
                 url: "{% url 'test' %}",
                 data: {csrfmiddlewaretoken: '{{ csrf_token }}', image: image_data_url },
                 success: function (response) {
-                    // on successfull creating object
-
-                    // your logic goes here
+                    let config = {
+                    dropOffBoard: 'snapback', // this is the default
+                    position: response,
+                    pieceTheme:'{% static 'img/chesspieces/wikipedia/' %}'+'{piece}.png'
+                    }
+                    Chessboard('myBoard', config)
                 },
                 error: function (response) {
                     // alert the error if any error occured

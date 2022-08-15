@@ -196,6 +196,8 @@ def main(args):
 
   active = args.active
   print("---\nPredicted FEN:\n%s %s - - 0 1" % (short_fen, active))
+  with open("imageToChess.txt", "w") as fh:
+    fh.write(short_fen)
   print("Final Certainty: %.1f%%" % (certainty*100))
 
 if __name__ == '__main__':

@@ -50,6 +50,10 @@ def test(request):
     data = bytes(data[1],'UTF-8')
     with open("chess/imageToChess.png", "wb") as fh:
        fh.write(base64.decodebytes(data))
+
+    with open("chess/imageToChess.txt", "r") as f:
+         line = f.readlines()
+
     os.system('python chess/tensorflow_chessbot.py --filepath chess/imageToChess.png ')
 
-    return HttpResponse('c')
+    return HttpResponse(line)
