@@ -43,11 +43,11 @@ def play(request):
     return render(request, 'play.html', context)
 
 
-def test(request):
+def add(request):
     data = request.POST['image']
     data = data.split("base64")
     print(data[1])
-    data = bytes(data[1],'UTF-8')
+    data = bytes(data[1], 'UTF-8')
     with open("chess/imageToChess.png", "wb") as fh:
        fh.write(base64.decodebytes(data))
 
@@ -57,3 +57,9 @@ def test(request):
     os.system('python chess/tensorflow_chessbot.py --filepath chess/imageToChess.png ')
 
     return HttpResponse(line)
+
+
+def finish(request):
+    g = Games(user=request.user, data=request.POST['fen'])
+    g.save()
+    return HttpResponse('Game added')

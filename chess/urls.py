@@ -10,7 +10,8 @@ urlpatterns = [
     path('<int:game_id>/', views.game, name='game'),
     path("signup/", SignUpView.as_view(), name="signup"),
     path("play/", views.play, name="play"),
-    path("test/", views.test, name="test")
+    path("add/", views.add, name="add"),
+    path("finish/", views.finish, name="finish")
 ]
 
 urlpatterns += staticfiles_urlpatterns()
